@@ -716,8 +716,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         try:
             fs = os.fstat(f.fileno())
             # Use browser cache if possible
-            if ("If-Modified-Since" in self.headers
-                    and "If-None-Match" not in self.headers):
+            if "If-Modified-Since" in self.headers:
                 # compare If-Modified-Since and time of last file modification
                 try:
                     ims = email.utils.parsedate_to_datetime(

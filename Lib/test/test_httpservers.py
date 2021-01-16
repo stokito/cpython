@@ -494,13 +494,13 @@ class SimpleHTTPServerTestCase(BaseTestCase):
         self.check_status_and_reason(response, HTTPStatus.OK)
 
     def test_browser_cache_with_If_None_Match_header(self):
-        # if If-None-Match header is present, ignore If-Modified-Since
+        # if If-None-Match header is present, ignore it and match by If-Modified-Since
 
         headers = email.message.Message()
         headers['If-Modified-Since'] = self.last_modif_header
         headers['If-None-Match'] = "*"
         response = self.request(self.base_url + '/test', headers=headers)
-        self.check_status_and_reason(response, HTTPStatus.OK)
+        self.check_status_and_reason(response, HTTPStatus.NOT_MODIFIED)
 
     def test_invalid_requests(self):
         response = self.request('/', method='FOO')
